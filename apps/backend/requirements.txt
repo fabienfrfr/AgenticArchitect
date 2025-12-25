@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+transformers
+torch
+pytest
+pytest-bdd
+chromadb
