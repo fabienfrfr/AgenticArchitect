@@ -1,0 +1,84 @@
+@startuml AgenticArchitect_Local_AI_Solution_Architecture
+
+!theme plain
+skinparam monochrome false
+skinparam shadowing false
+skinparam defaultFontName Arial
+left to right direction
+
+' --- Colors and styles ---
+skinparam rectangle {
+  BackgroundColor #f9f9f9
+  BorderColor #333
+  FontSize 12
+}
+skinparam database {
+  BackgroundColor #e6f3ff
+  BorderColor #0066cc
+}
+skinparam note {
+  BackgroundColor #fff2cc
+  BorderColor #d6b656
+}
+
+' --- Input/Data Layer ---
+rectangle "Input/Data Layer" {
+  rectangle "Client\nRequirements\n(PDF/Docx)" as client_req
+  database "Local RAG\nVector DB\n(ChromaDB)" as chroma_db
+  rectangle "Document\nLoader/Parser\n(Python)" as doc_parser
+
+  client_req --> doc_parser : "Loads documents"
+  doc_parser --> chroma_db : "Indexes data"
+}
+
+' --- Local Inference Core ---
+rectangle "Local Inference Core" {
+  rectangle "vLLM/Ollama\nRuntime\n(On-Premises)" as runtime
+  rectangle "NVIDIA Nemtron-3 Nano (30B)\n- Mamba/MoE Architecture\n- High Context (10M tokens)\n- FP8/INT4 Quantization" as nemotron
+
+  chroma_db --> runtime : "Provides data"
+  runtime --> nemotron : "Runs model"
+}
+
+' --- Agentic Bus & Output ---
+rectangle "Agentic Bus & Output" {
+  rectangle "Agent Analyst\n(Requirements Analysis)" as analyst
+  rectangle "Agent Orchestration\n(CrewAI/LangGraph)" as orchestrator
+  rectangle "Agent Architect\n(Architecture Design)" as architect
+
+  nemotron --> orchestrator : "Model results"
+  orchestrator --> analyst : "Coordinates"
+  orchestrator --> architect : "Coordinates"
+
+  rectangle "Outputs:" {
+    rectangle "Synthesis Executive\n(Markdown)" as synthesis
+    rectangle "Architecture Diagram\n(Mermaid)" as arch_diagram
+    rectangle "Infrastructure Code\n(Terraform/Python)" as infra_code
+  }
+
+  architect --> arch_diagram : "Generates"
+  architect --> infra_code : "Generates"
+  analyst --> synthesis : "Generates"
+}
+
+' --- Workflow ---
+note bottom
+  <b>Workflow: PDF > Code</b>
+  1. Load client requirements (PDF/Docx)
+  2. Parse and index in ChromaDB
+  3. Local inference with Nemtron-3
+  4. Orchestrate agents (Analyst, Architect)
+  5. Generate deliverables (Markdown, Mermaid, Terraform)
+end note
+
+' --- Legend ---
+legend right
+  | Icon/Type          | Description                          |
+  |--------------------|--------------------------------------|
+  | rectangle          | Software component/agent            |
+  | database           | Database (ChromaDB)                 |
+  | note               | Note or legend                      |
+  | -->                | Data flow/call                      |
+endlegend
+
+@enduml
