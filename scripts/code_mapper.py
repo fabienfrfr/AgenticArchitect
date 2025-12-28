@@ -4,8 +4,8 @@ Code Mapper: A bidirectional synchronization tool between code and JSON.
 Optimized with .gitignore support and default pathing.
 
 Usage:
-    python maps/code_mapper.py --to-json
-    python maps/code_mapper.py --from-json maps/project_structure.json
+    python scripts/code_mapper.py --to-json
+    python scripts/code_mapper.py --from-json scripts/project_structure.json
 """
 
 import os
@@ -15,9 +15,9 @@ import fnmatch
 from typing import List
 
 # --- Default Configurations ---
-# Default output: maps/project_structure.json
-DEFAULT_OUTPUT = os.path.join("maps", "project_structure.json")
-# Default root: The parent directory of the 'maps' folder
+# Default output: scripts/project_structure.json
+DEFAULT_OUTPUT = os.path.join("scripts", "project_structure.json")
+# Default root: The parent directory of the 'scripts' folder
 DEFAULT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -120,7 +120,7 @@ def generate_json_from_code(
 
     project_data = {"files": files}
 
-    # Ensure the output directory exists (e.g., 'maps/')
+    # Ensure the output directory exists (e.g., 'scripts/')
     os.makedirs(os.path.dirname(os.path.abspath(output_json_path)), exist_ok=True)
 
     with open(output_json_path, "w", encoding="utf-8") as f:
@@ -139,12 +139,12 @@ def main():
         nargs="?",
         const=DEFAULT_OUTPUT,
         metavar="JSON_PATH",
-        help="Generate code from a JSON file (default: maps/project_structure.json).",
+        help="Generate code from a JSON file (default: scripts/project_structure.json).",
     )
     parser.add_argument(
         "--to-json",
         nargs="*",
-        help="Generate JSON from code. Can take [ROOT_DIR] [OUTPUT_JSON]. Defaults to project root and maps/project_structure.json.",
+        help="Generate JSON from code. Can take [ROOT_DIR] [OUTPUT_JSON]. Defaults to project root and scripts/project_structure.json.",
     )
 
     args = parser.parse_args()
