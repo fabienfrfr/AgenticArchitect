@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Start services
+docker-compose up -d chromadb ollama
+
+# Pull the Nemotron-3 model (quantized)
+docker exec -it ollama ollama pull nemotron-3:8b-q4_0
+
+# Start backend and frontend
+docker-compose up -d backend frontend
+
+echo "✅ Local environment ready! Access the app at http://localhost:3000"

@@ -1,4 +1,5 @@
 # AgenticArchitect
+
 AgenticArchitect: Transforming raw client specifications into production-ready AI/Data solutions, powered by local LLMs.
 
 ![demo](/specs/demo.jpg)
@@ -18,3 +19,32 @@ Other relevant resources:
 - [AutoGen – Multi-agent conversation framework for LLM applications](https://github.com/microsoft/autogen)
 - [Elicit – AI research assistant for literature review and scientific workflows](https://elicit.org/)
 
+
+## Deployment
+
+### 1. Local (Docker Compose)
+#### Prerequisites
+- Docker and Docker Compose installed.
+- NVIDIA GPU + NVIDIA Container Toolkit drivers.
+
+#### Run
+```bash
+./scripts/deploy.sh local
+```
+Access the app at [http://localhost:3000](http://localhost:3000).
+
+---
+
+### 2. Cloud (AWS/GCP)
+#### Prerequisites
+- AWS/GCP account with permissions.
+- Terraform and Helm installed.
+
+#### Run
+```bash
+./scripts/deploy.sh cloud
+```
+Get the frontend service URL:
+```bash
+kubectl get services frontend
+```
