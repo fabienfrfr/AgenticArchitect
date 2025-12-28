@@ -1,0 +1,67 @@
+@startuml AgenticArchitect_Corrected_Workflow
+!theme plain
+skinparam ConditionEndStyle hline
+
+title Logical Flow: AgenticArchitect (English Version)
+
+|User|
+start
+:Submit Requirements (PDF/Docx);
+
+|#F9F9F9|Project Manager Agent|
+repeat
+  :Analyze Project Charter;
+  note right
+    **Validation Checklist:**
+    - Project Name & Description
+    - Context Definition
+    - SMART Objectives
+    - Scope, Limits & Risks
+    - Assumptions (I/O, Resources)
+    - Expected Deliverables
+  end note
+  
+  if (Is Charter SMART & Complete?) then (No)
+    :Generate Clarification Questionnaire;
+    |User|
+    :Provide Missing Details;
+    |#F9F9F9|Project Manager Agent|
+  else (Yes)
+    :Generate Validated Project Charter;
+    break
+  endif
+repeat while (Still missing info?) is (Yes)
+
+|#E3F2FD|Architect Agent|
+:Requirement Analysis (Bull's Eye / Octopus);
+:Maturity Study (SOTA / TRL Assessment);
+:Design Architecture Diagrams (BPMN, SADT);
+:Define Solution Type (POC/MVP/App);
+:Define Stakeholders (RACI) & Planning;
+:Define User Stories (Spec -> Test -> Code);
+:Generate Technical Architecture Dossier (TAD);
+
+|#F1F8E9|Developer Agent (IA/Data/Devops)|
+:Initialize CI/CD & Containers;
+:Build Functional Skeleton (V-Cycle);
+
+partition "Iterative Agile / SOLID Loop" {
+  repeat
+    :Define Functional Unit;
+    :Manage Data Pipeline;
+    :Write Unit Tests;
+    :Implement SOLID Functionality;
+    if (Tests Passed?) then (No)
+      :Auto-debug & Refactor;
+    else (Yes)
+      :Commit & Integrate;
+      break
+    endif
+  repeat while (Bug detected?) is (Yes)
+}
+
+|User|
+:Receive Final Solution (Code, Docs, Slides);
+stop
+
+@enduml
