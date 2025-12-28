@@ -2,7 +2,7 @@
 
 AgenticArchitect: Transforming raw client specifications into production-ready AI/Data solutions, powered by local LLMs.
 
-![demo](/specs/demo.jpg)
+![demo](/docs/global_demo.jpg)
 
 ## 🔍 Related Research & Agentic Tools
 
