@@ -1,12 +1,13 @@
-@startuml AgenticArchitect_Adaptive_Workflow
+@startuml AgenticArchitect_Master_Workflow
 !theme plain
 skinparam ConditionEndStyle hline
 
-title Logical Flow: Adaptive AgenticArchitect (PM -> Arch -> Dev)
+title Logical Flow: Adaptive AgenticArchitect (Swimlane)
 
 |User|
 start
 :Submit Requirements (PDF/Docx);
+:Upload Sample Data (Optionnal);
 
 |#F9F9F9|Project Manager Agent|
 repeat
@@ -27,27 +28,43 @@ repeat
 repeat while (Charter Ready for Arch?) is (Yes)
 :Generate Final Project Charter & Executive Summary;
 
+split
+   |#FFF3E0|Data Analyst Agent|
+   partition "Data Discovery & Preparation" {
+     if (Sample Data Provided?) then (Yes)
+       :Run Automated EDA;
+       :Generate Data Profile Report;
+     else (No)
+       :Generate **Synthetic Data** (Faker/LLM);
+     endif
+     :Define Data Validation Rules;
+     :Produce Sample Dataset for Dev;
+   }
+split again
+   |#E3F2FD|Architect Agent|
+   partition "Value Analysis (The Why)" {
+     :Functional Analysis (Bull's Eye / Octopus);
+     :Assess SOTA & TRL;
+   }
+   partition "Solution Design (The How)" {
+     :Determine Solution Type (POC/MVP/App);
+     :Generate Diagrams (BPMN, SADT, C4);
+     :Draft RACI & Budgetary Estimation;
+   }
+   partition "Execution Specs" {
+     :Decompose into User Stories;
+     :Define Data Schemas & API Contracts;
+   }
+end split
+
 |#E3F2FD|Architect Agent|
-partition "Value Analysis (The Why)" {
-  :Functional Analysis (Bull's Eye / Octopus);
-  :Assess SOTA & TRL;
-}
-partition "Solution Design (The How)" {
-  :Determine Solution Type (POC/MVP/App);
-  :Generate Diagrams (BPMN, SADT, C4);
-  :Draft RACI & Budgetary Estimation;
-}
-partition "Execution Specs" {
-  :Decompose into User Stories;
-  :Define Data Schemas & API Contracts;
-}
 :Generate Technical Architecture Dossier (TAD) + Slides;
 
 |#F1F8E9|Developer Agent (IA/Data/Devops)|
-:Initialize CI/CD & Env (Docker/Kubernetes);
+:Initialize Git Repo, CI/CD & Env (Docker/Kubernetes);
 :Scaffold Project Structure (V-Cycle Logic);
 
-partition "Iterative Development (SOLID)" {
+partition "Iterative Development (SOLID + Git)" {
   repeat
     :Define Atomic Task;
     :Data Pipeline & DB Migration;
@@ -56,13 +73,13 @@ partition "Iterative Development (SOLID)" {
       :Self-Debug (Logs analysis -> Refactor);
     else (Yes)
       :Document & Merge;
+      :Git Commit & Push (feat: task-name);
       break
     endif
   repeat while (Remaining Tasks?) is (Yes)
 }
 
 |User|
-:Receive Deliverables (Codebase, TAD, Pitch Deck);
+:Receive Deliverables (Git Repo, Codebase, TAD, EDA Report, Pitch Deck);
 stop
-
 @enduml
