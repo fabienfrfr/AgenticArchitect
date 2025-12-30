@@ -1,18 +1,24 @@
 import os
 from pydantic_settings import BaseSettings
+from pydantic import Field
 
 
 class Settings(BaseSettings):
-    ENV: str = os.getenv("ENV", "local")  # 'test' or 'local'
-    OLLAMA_URL: str = os.getenv("OLLAMA_URL", "http://ollama:11434")
+    # Pydantic will automatically look for an environment variable named 'ENV'
+    # If not found, it defaults to 'local'
+    ENV: str = Field(default="local", alias="ENV")
+    OLLAMA_URL: str = Field(default="http://localhost:11434", alias="OLLAMA_URL")
 
     @property
     def MODEL_NAME(self) -> str:
-        # If testing, use the ultra-light Gemma 3
-        if self.ENV == "test":
+        # Use case-insensitive check for robustness
+        if self.ENV.lower() == "test":
             return "gemma3:270m"
-        # In production/local, use the powerful Nemotron (Transoformer X Mamba MOE)
         return "nemotron-3-nano:30b"
+
+    class Config:
+        # This allows loading from a .env file if present
+        env_file = ".env"
 
 
 config = Settings()
