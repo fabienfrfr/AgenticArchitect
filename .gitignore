@@ -4,6 +4,31 @@ project_structure.json
 # IDEs and editors
 .vscode/
 
+### JavaScript part ###
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+build/
+dist/
+
+# Env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Misc
+.DS_Store
+.vscode/
+
+
 ### Python part ###
 
 # Byte-compiled / optimized / DLL files
