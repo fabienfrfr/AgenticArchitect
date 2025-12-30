@@ -11,6 +11,8 @@ pydantic-settings
 # Testing
 pytest
 pytest-bdd
+pytest-asyncio 
+nest-asyncio
 
 # Data Analysis
 numpy

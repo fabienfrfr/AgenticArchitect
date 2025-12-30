@@ -1,5 +1,5 @@
 from langchain_ollama import ChatOllama
-from apps.backend.core.config import config
+from apps.architect.core.config import config
 
 
 def get_llm(json_mode: bool = True):

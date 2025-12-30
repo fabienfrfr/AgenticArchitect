@@ -1,6 +1,6 @@
 import json
 from pytest_bdd import scenario, given, when, then, parsers
-from apps.backend.agents.pm import PMAgent
+from apps.architect.agents.pm import PMAgent
 
 
 @scenario(

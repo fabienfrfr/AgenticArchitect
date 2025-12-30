@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from apps.backend.core.llm import get_llm
+from apps.architect.core.llm import get_llm
 
 
 class PMAgent:

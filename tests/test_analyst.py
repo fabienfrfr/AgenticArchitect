@@ -1,5 +1,5 @@
 import pytest
-from apps.backend.agents.analyst import AnalystAgent
+from apps.architect.agents.analyst import AnalystAgent
 
 
 @pytest.mark.bdd

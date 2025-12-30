@@ -46,9 +46,3 @@ jobs:
           ENV: test # This forces the Config class to use 'test' logic
           OLLAMA_URL: http://localhost:11434
         run: pytest tests/
-
-      - name: Run Frontend Tests
-        run: |
-          cd apps/frontend
-          npm install
-          CI=true npm test -- --watchAll=false

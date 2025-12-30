@@ -5,10 +5,10 @@ from langgraph.graph import StateGraph, START, END
 
 # --- Standardized Imports ---
 # Ensure these paths match your folder structure exactly
-from apps.backend.agents.pm import PMAgent
-from apps.backend.agents.analyst import AnalystAgent
-from apps.backend.agents.architect import ArchitectAgent
-from apps.backend.agents.engineer import EngineerAgent
+from apps.architect.agents.pm import PMAgent
+from apps.architect.agents.analyst import AnalystAgent
+from apps.architect.agents.architect import ArchitectAgent
+from apps.architect.agents.engineer import EngineerAgent
 
 # --- State Definition ---
 
