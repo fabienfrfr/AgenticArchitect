@@ -14,3 +14,8 @@ chromadb
 pytest
 pytest-bdd
 pytest-env
+
+# Data Analysis
+numpy
+pandas
+scipy
