@@ -1,11 +1,16 @@
+# Web Framework
 fastapi
 uvicorn
 pydantic
-transformers
-torch
-pytest
-pytest-bdd
-chromadb
+pydantic-settings
+
+# AI & Agents
 langchain-ollama
 langgraph
-pydantic-settings
+ollama
+
+# Database & Tools
+chromadb
+pytest
+pytest-bdd
+pytest-env
