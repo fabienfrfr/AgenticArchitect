@@ -1,14 +1,37 @@
-name: CI/CD
-on: [push]
+name: CI-CD-Pipeline
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    env:
+      # Adds the root directory to PYTHONPATH so 'apps' can be imported
+      PYTHONPATH: ${{ github.workspace }}
+      ENV: test
+      OLLAMA_URL: http://localhost:11434
+
     steps:
-      - uses: actions/checkout@v3
-      - run: pip install -r apps/backend/requirements.txt && pytest tests/
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: docker-compose -f infra/docker-compose.yml up --build -d
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Ensure pydantic-settings and langgraph are present
+          pip install -r apps/backend/requirements.txt
+
+      - name: Run Pytest Suite
+        # We run tests. If they require a live LLM connection,
+        # they might still fail until we implement mocking.
+        run: pytest tests/
