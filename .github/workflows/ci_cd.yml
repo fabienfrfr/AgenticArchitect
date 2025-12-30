@@ -43,3 +43,6 @@ jobs:
 
       - name: Run Pytest Suite
         run: pytest tests/
+        env:
+          ENV: test # This forces the Config class to use 'test' logic
+          OLLAMA_URL: http://localhost:11434
