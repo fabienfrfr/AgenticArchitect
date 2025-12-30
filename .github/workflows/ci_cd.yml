@@ -42,7 +42,7 @@ jobs:
           pip install -r apps/backend/requirements.txt
 
       - name: Run Pytest Suite
-        run: pytest tests/
         env:
           ENV: test # This forces the Config class to use 'test' logic
           OLLAMA_URL: http://localhost:11434
+        run: pytest tests/
