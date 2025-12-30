@@ -1,31 +1,37 @@
-from fastapi import FastAPI
-from apps.backend.agents.analyst.agent import AnalystAgent
-from apps.backend.agents.architect.agent import ArchitectAgent
-from apps.backend.agents.engineer.agent import EngineerAgent
-from apps.backend.core.nemotron import NemotronInference
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from apps.backend.core.orchestrator import app_workflow
 
-app = FastAPI()
-analyst = AnalystAgent()
-architect = ArchitectAgent()
-engineer = EngineerAgent()
-nemotron = NemotronInference()
+app = FastAPI(title="AgenticArchitect API")
 
-@app.post("/analyze_cdc")
-def analyze_cdc(cdc_text: str):
-    return analyst.analyze(cdc_text)
 
-@app.post("/generate_c4")
-def generate_c4(requirements: dict):
-    return {"diagram": architect.generate_c4_diagram(requirements)}
+class ProjectRequest(BaseModel):
+    requirements: str
 
-@app.post("/generate_adr")
-def generate_adr(context: dict):
-    return architect.generate_adr(context)
 
-@app.post("/generate_code")
-def generate_code(adr: dict, c4_diagram: dict):
-    return engineer.generate_solid_code(adr, c4_diagram)
+@app.post("/process_project")
+async def process_project(request: ProjectRequest):
+    """
+    Main entry point that follows the AgenticArchitect Swimlane.
+    It triggers the LangGraph workflow: PM -> Analyst -> Architect -> Engineer.
+    """
+    try:
+        # Initial state for the workflow
+        initial_state = {
+            "requirements": request.requirements,
+            "charter_data": {},
+            "is_ready": False,
+            "status": "started",
+        }
 
-@app.post("/nemotron_inference")
-def nemotron_inference(prompt: str):
-    return {"response": nemotron.generate(prompt)}
+        # Execute the graph (Swimlane logic)
+        final_result = app_workflow.invoke(initial_state)
+
+        return {"success": True, "data": final_result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "up", "environment": "check config for model info"}
