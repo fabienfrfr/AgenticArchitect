@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from apps.backend.core.orchestrator import app_workflow
+from ..core.orchestrator import app_workflow
 
 app = FastAPI(title="AgenticArchitect API")
 

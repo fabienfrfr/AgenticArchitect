@@ -1,0 +1,18 @@
+# UI & Software Window
+nicegui
+pywebview
+
+# Agents & Logic
+langgraph
+langchain-ollama
+chromadb
+pydantic-settings
+
+# Testing
+pytest
+pytest-bdd
+
+# Data Analysis
+numpy
+pandas
+scipy
