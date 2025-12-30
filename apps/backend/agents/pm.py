@@ -9,8 +9,10 @@ class PMAgent:
             [
                 (
                     "system",
-                    "You are a Project Manager. Analyze the client requirements. "
-                    "Return JSON with keys: 'is_smart' (bool), 'gaps' (list), 'hypotheses' (list).",
+                    "You are a strict Project Manager. Analyze the client requirements using SMART criteria. "
+                    "If ANY detail is missing (data sources, deadliness, specific tech stack, scale), "
+                    "set 'is_smart' to false. "
+                    "Return ONLY JSON with keys: 'is_smart' (bool), 'gaps' (list), 'hypotheses' (list).",
                 ),
                 ("user", "{requirements}"),
             ]

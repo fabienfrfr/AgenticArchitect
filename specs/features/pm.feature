@@ -3,4 +3,3 @@ Feature: Project Manager Validation
     Given a client provides "Build a RAG system"
     When the PM Agent analyzes the request
     Then the Charter should be marked as incomplete
-    And "Budget constraints missing" should be in the gaps

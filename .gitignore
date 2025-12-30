@@ -1,6 +1,8 @@
 ### Global part ###
 # mapped files
 project_structure.json
+# IDEs and editors
+.vscode/
 
 ### Python part ###
 

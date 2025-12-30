@@ -4,7 +4,7 @@
 docker-compose up -d chromadb ollama
 
 # Pull the Nemotron-3 model (quantized)
-docker exec -it ollama ollama pull nemotron-3:8b-q4_0
+docker exec -it ollama ollama pull nemotron-3-nano:30b
 
 # Start backend and frontend
 docker-compose up -d backend frontend
