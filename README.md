@@ -1,8 +1,23 @@
 # AgenticArchitect
 
-AgenticArchitect: Transforming raw client specifications into production-ready AI/Data solutions, powered by local LLMs.
+**AgenticArchitect** (or **TheArchitect**) is a local-first multi-agent system designed to transform raw client specifications into production-ready AI and Data solutions.
+
+By leveraging **Stateful Graph Orchestration (LangGraph)** and high-performance local LLMs (like **NVIDIA Nemotron-3**), it automates the entire software development lifecycle (SDLC) from requirements analysis to SOLID code generation.
+
 
 ![demo](/docs/global_demo.jpg)
+
+
+## 🏗️ Core Architecture (The Swimlane)
+
+The system follows a strict automated workflow based on an agentic bus:
+
+
+1.  **Project Manager Agent**: Validates SMART requirements and identifies gaps.
+2.  **Data Analyst Agent**: Performs EDA and synthetic data generation.
+3.  **Architect Agent**: Designs C4 Diagrams and Decision Records (ADR).
+4.  **Engineer Agent**: Produces TDD-backed, SOLID-compliant code.
+
 
 ## 🔍 Related Research & Agentic Tools
 
@@ -48,3 +63,11 @@ Get the frontend service URL:
 ```bash
 kubectl get services frontend
 ```
+
+## 📜 License
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+
+Copyright (c) 2025 **Fabien Furfaro** - [AgenticArchitect](https://github.com/fabienfrfr/AgenticArchitect)
+
+Full license text available in the [LICENSE](./LICENSE) file with is notice in the [NOTICE](./NOTICE) file.

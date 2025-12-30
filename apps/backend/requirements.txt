@@ -6,3 +6,6 @@ torch
 pytest
 pytest-bdd
 chromadb
+langchain-ollama
+langgraph
+pydantic-settings

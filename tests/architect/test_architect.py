@@ -1,5 +1,6 @@
 import pytest
-from apps.backend.agents.architect.agent import ArchitectAgent
+from apps.backend.agents.architect import ArchitectAgent
+
 
 @pytest.mark.bdd
 class TestArchitectAgent:

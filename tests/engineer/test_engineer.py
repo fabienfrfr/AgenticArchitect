@@ -1,5 +1,6 @@
 import pytest
-from apps.backend.agents.engineer.agent import EngineerAgent
+from apps.backend.agents.engineer import EngineerAgent
+
 
 @pytest.mark.bdd
 class TestEngineerAgent:

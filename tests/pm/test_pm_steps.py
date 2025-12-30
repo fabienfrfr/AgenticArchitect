@@ -1,6 +1,6 @@
 import pytest
 from pytest_bdd import scenario, given, when, then
-from apps.backend.agents.pm.agent import PMAgent
+from apps.backend.agents.pm import PMAgent
 
 
 @scenario(
