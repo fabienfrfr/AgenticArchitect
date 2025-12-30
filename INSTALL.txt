@@ -20,5 +20,5 @@
 ## Testing
 Run the test suite:
 ```bash
-docker-compose -f infra/docker-compose.yml exec backend pytest tests/
+docker-compose -f infra/docker-compose.yml exec architect pytest tests/
 ```

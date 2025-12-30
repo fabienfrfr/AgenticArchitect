@@ -29,8 +29,8 @@ services:
       - chroma_data:/data/chroma
     restart: unless-stopped
 
-  backend:
-    build: ../../apps/backend
+  architect:
+    build: ../../apps/architect
     ports:
       - "8000:8000"
     depends_on:
@@ -47,7 +47,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - architect
     restart: unless-stopped
 
 volumes:

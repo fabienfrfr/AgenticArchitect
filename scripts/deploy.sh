@@ -16,9 +16,7 @@ case $ENV in
     cd ../helm
     helm install ollama ./ollama
     helm install chromadb ./chromadb
-    helm install backend ./backend
-    helm install frontend ./frontend
-    ;;
+    helm install architect ./architect    ;;
   *)
     echo "❌ Unrecognized environment. Use 'local' or 'cloud'."
     exit 1

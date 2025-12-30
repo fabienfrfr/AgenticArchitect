@@ -39,7 +39,7 @@ jobs:
           python -m pip install --upgrade pip
           # Added pytest-env here to ensure pytest.ini is read correctly
           pip install pytest-env
-          pip install -r apps/backend/requirements.txt
+          pip install -r apps/architect/requirements.txt
 
       - name: Run Pytest Suite
         env:
