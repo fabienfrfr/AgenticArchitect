@@ -4,6 +4,22 @@ project_structure.json
 # IDEs and editors
 .vscode/
 
+# JavaScript / Node.js
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Python (Poetry, Pipenv, UV)
+poetry.lock
+Pipfile.lock
+uv.lock
+
+# PHP
+composer.lock
+
+# Ruby
+Gemfile.lock
+
 ### JavaScript part ###
 
 # Dependencies
