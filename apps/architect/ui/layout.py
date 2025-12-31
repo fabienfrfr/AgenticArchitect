@@ -1,37 +1,36 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from ..core.orchestrator import app_workflow
-
-app = FastAPI(title="AgenticArchitect API")
+from nicegui import ui
+from typing import Callable, Dict, Any
 
 
-class ProjectRequest(BaseModel):
-    requirements: str
+class ArchitectLayout:
+    def __init__(self, on_start: Callable):
+        self.on_start = on_start
+        self.container = ui.column().classes("w-full items-center")
+        self.setup_ui()
 
+    def setup_ui(self):
+        with ui.card().classes("w-2/3 q-pa-md mt-10"):
+            ui.label("TheArchitect").classes("text-h4 mb-4")
+            self.req_input = ui.textarea(
+                label="Enter project requirements",
+                placeholder="e.g. Build a Python API with Docker...",
+            ).classes("w-full")
 
-@app.post("/process_project")
-async def process_project(request: ProjectRequest):
-    """
-    Main entry point that follows the AgenticArchitect Swimlane.
-    It triggers the LangGraph workflow: PM -> Analyst -> Architect -> Engineer.
-    """
-    try:
-        # Initial state for the workflow
-        initial_state = {
-            "requirements": request.requirements,
-            "charter_data": {},
-            "is_ready": False,
-            "status": "started",
-        }
+            ui.button(
+                "START AGENTIC WORKFLOW",
+                on_click=lambda: self.on_start(self.req_input.value),
+            ).classes("w-full mt-4")
 
-        # Execute the graph (Swimlane logic)
-        final_result = app_workflow.invoke(initial_state)
+            self.spinner = ui.spinner(size="lg").classes("mt-4")
+            self.spinner.set_visibility(False)
 
-        return {"success": True, "data": final_result}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+            self.results_area = ui.column().classes("w-full mt-6")
 
+    def toggle_loader(self, visible: bool):
+        self.spinner.set_visibility(visible)
 
-@app.get("/health")
-def health_check():
-    return {"status": "up", "environment": "check config for model info"}
+    def display_results(self, result: Dict[str, Any]):
+        self.results_area.clear()
+        with self.results_area:
+            ui.label("Analysis Results").classes("text-h6")
+            ui.json_editor({"content": {"json": result}})
