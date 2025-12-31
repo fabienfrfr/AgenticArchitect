@@ -41,14 +41,17 @@ Other relevant resources:
 
 #### Manual
 
+Only on linux and not recommanded (only for testing) :
+
 ```bash
+sudo apt-get install -y libgirepository-2.0-dev libcairo2-dev pkg-config gir1.2-gtk-3.0
 git clone [https://github.com/fabienfrfr/AgenticArchitect.git](https://github.com/fabienfrfr/AgenticArchitect.git)
 cd AgenticArchitect
 pip install -r apps/architect/requirements.txt
 python -m apps.architect.main
 ```
 
-Access the app at [http://localhost:3000](http://localhost:3000).
+Access the app at [http://localhost:3000](http://localhost:3000). (or native mode)
 
 #### Run
 

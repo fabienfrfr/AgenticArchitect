@@ -80,22 +80,23 @@ def generate_code_from_json(json_path: str) -> None:
 
 
 # --- Code → JSON ---
-def generate_json_from_code(
-    root_dir: str, output_json_path: str, extensions: List[str] = None
-) -> None:
+def generate_json_from_code(root_dir: str, output_json_path: str) -> None:
     """
-    Generates a JSON describing the structure of a code directory, respecting .gitignore.
+    Generates a JSON describing the structure of a code directory,
+    respecting .gitignore and excluding binary files.
     """
     files = []
-    if extensions is None:
-        extensions = [".py", ".md", ".json", ".yml", ".sh", ".puml", ".txt", ".txt"]
-
     ignored_patterns = get_ignored_patterns(root_dir)
-    print(f"🔍 Scanning: {root_dir}")
+
+    # Explicitly add the .gitignore file itself to the ignore list
+    ignored_patterns.append(".gitignore")
+    ignored_patterns.append("LICENSE")
+
+    print(f"🔍 Scanning all text files in: {root_dir}")
     print(f"📁 Output target: {output_json_path}")
 
     for dirpath, dirnames, filenames in os.walk(root_dir):
-        # Prune ignored directories to speed up the walk
+        # Prune ignored directories (like .git, .venv, etc.)
         dirnames[:] = [
             d
             for d in dirnames
@@ -106,21 +107,26 @@ def generate_json_from_code(
             file_path = os.path.join(dirpath, filename)
             relative_path = os.path.relpath(file_path, root_dir)
 
+            # 1. Skip if ignored by gitignore or if it's the .gitignore file
             if is_ignored(relative_path, ignored_patterns):
                 continue
 
-            if not any(file_path.endswith(ext) for ext in extensions):
-                continue
-
+            # 2. Skip binary files or specific common non-text formats
+            # Instead of checking for specific extensions, we try to read as text
             try:
+                # We check if it's a text file by trying to read a small chunk
+                with open(file_path, "tr") as check_file:
+                    check_file.read(1024)
+
                 content = read_file_content(file_path)
                 files.append({"path": relative_path, "content": content})
+            except (UnicodeDecodeError, PermissionError):
+                # This skips binary files (images, executables) and restricted files
+                continue
             except Exception as e:
                 print(f"⚠️ Could not read {relative_path}: {e}")
 
     project_data = {"files": files}
-
-    # Ensure the output directory exists (e.g., 'scripts/')
     os.makedirs(os.path.dirname(os.path.abspath(output_json_path)), exist_ok=True)
 
     with open(output_json_path, "w", encoding="utf-8") as f:

@@ -1,9 +1,9 @@
+import multiprocessing
+import sys
+
 from nicegui import ui
 from apps.architect.ui.layout import ArchitectLayout
 from apps.architect.controller import ArchitectController
-
-import multiprocessing
-import sys
 
 
 class TheArchitectApp:
