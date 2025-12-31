@@ -2,8 +2,9 @@
 
 **AgenticArchitect** (or **TheArchitect**) is a local-first multi-agent system designed to transform raw client specifications into production-ready AI and Data solutions.
 
-
 By leveraging **Stateful Graph Orchestration (LangGraph)** and high-performance local LLMs (like **NVIDIA Nemotron-3**), it automates the entire software development lifecycle (SDLC) from requirements analysis to SOLID code generation.
+
+Demo on [thearchitect.dev](thearchitect.dev) website ! (In progress)
 
 ![demo](/docs/global_demo.jpg)
 
