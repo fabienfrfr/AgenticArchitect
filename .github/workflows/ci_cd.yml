@@ -34,7 +34,12 @@ jobs:
       - name: Pull Test Model
         run: ollama pull gemma3:270m
 
-      - name: Install Dependencies
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config gir1.2-gtk-3.0
+
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           # Added pytest-env here to ensure pytest.ini is read correctly
