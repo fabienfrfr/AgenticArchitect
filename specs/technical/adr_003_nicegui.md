@@ -23,4 +23,4 @@ Traditional **React/FastAPI** stacks create "stack friction" for solo developers
 ## 4. Consequences
 
 * **Pros** : 10x faster development, simplified Docker deployment, unified debugging.
-* **Cons** : Requires specific Linux process handling (`reload=False`) to avoid multiprocessing conflicts on Ubuntu.
+* **Cons** : Requires specific Linux process handling to avoid multiprocessing conflicts on Ubuntu.

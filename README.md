@@ -4,20 +4,16 @@
 
 By leveraging **Stateful Graph Orchestration (LangGraph)** and high-performance local LLMs (like **NVIDIA Nemotron-3**), it automates the entire software development lifecycle (SDLC) from requirements analysis to SOLID code generation.
 
-
 ![demo](/docs/global_demo.jpg)
-
 
 ## 🏗️ Core Architecture (The Swimlane)
 
 The system follows a strict automated workflow based on an agentic bus:
 
-
-1.  **Project Manager Agent**: Validates SMART requirements and identifies gaps.
-2.  **Data Analyst Agent**: Performs EDA and synthetic data generation.
-3.  **Architect Agent**: Designs C4 Diagrams and Decision Records (ADR).
-4.  **Engineer Agent**: Produces TDD-backed, SOLID-compliant code.
-
+1. **Project Manager Agent**: Validates SMART requirements and identifies gaps.
+2. **Data Analyst Agent**: Performs EDA and synthetic data generation.
+3. **Architect Agent**: Designs C4 Diagrams and Decision Records (ADR).
+4. **Engineer Agent**: Produces TDD-backed, SOLID-compliant code.
 
 ## 🔍 Related Research & Agentic Tools
 
@@ -34,32 +30,51 @@ Other relevant resources:
 - [AutoGen – Multi-agent conversation framework for LLM applications](https://github.com/microsoft/autogen)
 - [Elicit – AI research assistant for literature review and scientific workflows](https://elicit.org/)
 
-
 ## Deployment
 
 ### 1. Local (Docker Compose)
+
 #### Prerequisites
+
 - Docker and Docker Compose installed.
 - NVIDIA GPU + NVIDIA Container Toolkit drivers.
 
+#### Manual
+
+```bash
+git clone [https://github.com/fabienfrfr/AgenticArchitect.git](https://github.com/fabienfrfr/AgenticArchitect.git)
+cd AgenticArchitect
+pip install -r apps/architect/requirements.txt
+python -m apps.architect.main
+```
+
+Access the app at [http://localhost:3000](http://localhost:3000).
+
 #### Run
+
 ```bash
 ./scripts/deploy.sh local
 ```
+
 Access the app at [http://localhost:3000](http://localhost:3000).
 
 ---
 
 ### 2. Cloud (AWS/GCP)
+
 #### Prerequisites
+
 - AWS/GCP account with permissions.
 - Terraform and Helm installed.
 
 #### Run
+
 ```bash
 ./scripts/deploy.sh cloud
 ```
+
 Get the frontend service URL:
+
 ```bash
 kubectl get services frontend
 ```
