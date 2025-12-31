@@ -4,8 +4,8 @@ Code Mapper: A bidirectional synchronization tool between code and JSON.
 Optimized with .gitignore support and default pathing.
 
 Usage:
-    python scripts/code_mapper.py --to-json
-    python scripts/code_mapper.py --from-json scripts/project_structure.json
+python scripts/code_mapper.py --to-json
+python scripts/code_mapper.py --from-json scripts/project_structure.json
 """
 
 import os

@@ -29,4 +29,4 @@ if __name__ in {"__main__", "__mp_main__"}:
         except RuntimeError:
             pass
     app = TheArchitectApp()
-    ui.run(title="TheArchitect", native=False, window_size=(1200, 800))
+    ui.run(title="TheArchitect", port=8080, native=False)

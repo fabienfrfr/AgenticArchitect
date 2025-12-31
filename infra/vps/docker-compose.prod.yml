@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  # EDGE PROXY: Traefik handles SSL (HTTPS) automatically
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=fabien.furfaro@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    restart: always
+
+  # ARCHITECT SERVICE: The main agentic engine
+  # Based on your structure, we build from the root or the architect folder
+  architect:
+    build:
+      context: ../../
+      dockerfile: apps/architect/Dockerfile
+    container_name: agentic_architect
+    environment:
+      - ENV=test
+      - OLLAMA_URL=http://ollama:11434
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.architect.rule=Host(`thearchitect.dev`)"
+      - "traefik.http.routers.architect.entrypoints=websecure"
+      - "traefik.http.routers.architect.tls.certresolver=myresolver"
+      # NiceGUI uses port 8080 by default
+      - "traefik.http.services.architect.loadbalancer.server.port=8080"
+    depends_on:
+      - ollama
+    restart: always
+
+  # OLLAMA: Local inference engine (CPU Mode for VPS)
+  ollama:
+    build:
+      context: .
+      dockerfile: Ollama.Dockerfile
+    container_name: ollama_service
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+
+volumes:
+  ollama_data:

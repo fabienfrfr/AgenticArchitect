@@ -4,6 +4,10 @@ PIP = pip
 VENV = .venv
 ACTIVATE = . $(VENV)/bin/activate
 
+# Deployment configuration
+DOMAIN = thearchitect.dev
+USER = ubuntu
+
 # Default target
 .DEFAULT_GOAL := help
 
@@ -12,38 +16,53 @@ help: ## Display this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 ##@ Setup
-.env: ## Create default .env file (Defaults to test mode)
+.env: ## Create default .env file
 	@echo "PYTHONPATH=." > .env
 	@echo "ENV=test" >> .env
 	@echo "OLLAMA_URL=http://localhost:11434" >> .env
 	@echo "NICEGUI_NATIVE=False" >> .env
-	@echo ".env file created with ENV=test."
+	@echo "DOMAIN=$(DOMAIN)" >> .env
+	@echo "USER=$(USER)" >> .env
+	@echo ".env file created."
 
 install: .env ## Create virtualenv and install dependencies
 	$(PYTHON) -m venv $(VENV)
 	$(ACTIVATE) && $(PIP) install --upgrade pip
-	$(ACTIVATE) && $(PIP) install -r apps/architect/requirements.txt
+	$(ACTIVATE) && $(PIP) install -r requirements.txt
 	@echo "Installation complete."
 
 ##@ Development
+run: ## Launch application in LOCAL mode
+	$(ACTIVATE) && export PYTHONPATH=. && ENV=local python3 -m architect.main
 
-# Run in local mode by overriding the ENV variable
-run: ## Launch NiceGUI application in LOCAL mode
-	$(ACTIVATE) && export PYTHONPATH=. && ENV=local python3 -m apps.architect.main
-
-# Run in test mode (uses the .env default)
-run-test: ## Launch NiceGUI application in TEST mode
-	$(ACTIVATE) && export PYTHONPATH=. && python3 -m apps.architect.main
+run-test: ## Launch application in TEST mode
+	$(ACTIVATE) && export PYTHONPATH=. && python3 -m architect.main
 
 test: ## Run pytest-bdd tests
 	$(ACTIVATE) && export PYTHONPATH=. && pytest tests/
 
-docker-run: ## Build and start containers using Docker Compose
+docker-run: ## Build and start local containers
 	docker compose -f infra/local/docker-compose.yml up --build
+
+vps-setup: ## Update VPS and install Docker + Compose
+	@echo "🛠️  Updating system and installing Docker on $(DOMAIN)..."
+	ssh $(USER)@$(DOMAIN) "sudo apt update && sudo apt install -y docker.io docker-compose-v2"
+	@echo "👤 Adding user to docker group..."
+	ssh $(USER)@$(DOMAIN) "sudo usermod -aG docker $(USER)"
+	@echo "✅ Setup complete!"
+	@echo "⚠️  IMPORTANT: You must manually log out and log back in to the VPS for permissions to take effect."
+
+##@ Deployment
+deploy: ## Deploy the project to OVH VPS via SSH/Rsync
+	@echo "📤 Uploading AgenticArchitect to $(DOMAIN)..."
+	ssh $(USER)@$(DOMAIN) "mkdir -p ~/AgenticArchitect"
+	rsync -avz --exclude='.git' --exclude='.venv' --exclude='__pycache__' ./ $(USER)@$(DOMAIN):~/AgenticArchitect
+	@echo "🚀 Launching Production Stack on VPS..."
+	ssh $(USER)@$(DOMAIN) "cd ~/AgenticArchitect && docker compose -f infra/vps/docker-compose.prod.yml up -d --build"
 
 ##@ Cleanup
 clean: ## Remove virtualenv and python cache files
 	rm -rf $(VENV)
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 
-.PHONY: help install run run-test test docker-run clean
+.PHONY: help install run run-test test docker-run vps-setup deploy clean
