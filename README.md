@@ -1,4 +1,4 @@
-# AgenticArchitect
+# <img src="./docs/architect_face.svg" width="25" alt="Architect Face"> AgenticArchitect
 
 **AgenticArchitect** (or **TheArchitect**) is a local-first multi-agent system designed to transform raw client specifications into production-ready AI and Data solutions.
 
@@ -67,6 +67,8 @@ Access the app at [http://localhost:3000](http://localhost:3000).
 
 ### 2. Cloud (AWS/GCP)
 
+Migrate to OVH
+
 #### Prerequisites
 
 - AWS/GCP account with permissions.
@@ -91,6 +93,3 @@ This project is licensed under the **GNU Affero General Public License v3.0 (AGP
 Copyright (c) 2025 **Fabien Furfaro** - [AgenticArchitect](https://github.com/fabienfrfr/AgenticArchitect)
 
 Full license text available in the [LICENSE](./LICENSE) file with is notice in the [NOTICE](./NOTICE) file.
-
-![face](/docs/architect_face.svg)
-
