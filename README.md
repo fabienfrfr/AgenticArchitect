@@ -2,6 +2,7 @@
 
 **AgenticArchitect** (or **TheArchitect**) is a local-first multi-agent system designed to transform raw client specifications into production-ready AI and Data solutions.
 
+
 By leveraging **Stateful Graph Orchestration (LangGraph)** and high-performance local LLMs (like **NVIDIA Nemotron-3**), it automates the entire software development lifecycle (SDLC) from requirements analysis to SOLID code generation.
 
 ![demo](/docs/global_demo.jpg)
@@ -89,3 +90,6 @@ This project is licensed under the **GNU Affero General Public License v3.0 (AGP
 Copyright (c) 2025 **Fabien Furfaro** - [AgenticArchitect](https://github.com/fabienfrfr/AgenticArchitect)
 
 Full license text available in the [LICENSE](./LICENSE) file with is notice in the [NOTICE](./NOTICE) file.
+
+![face](/docs/architect_face.svg)
+
