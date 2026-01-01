@@ -16,14 +16,21 @@ help: ## Display this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 ##@ Setup
-.env: ## Create default .env file
-	@echo "PYTHONPATH=." > .env
-	@echo "ENV=test" >> .env
-	@echo "OLLAMA_URL=http://localhost:11434" >> .env
-	@echo "NICEGUI_NATIVE=False" >> .env
-	@echo "DOMAIN=$(DOMAIN)" >> .env
-	@echo "USER=$(USER)" >> .env
-	@echo ".env file created."
+.env: ## Create default .env file ONLY if it doesn't exist
+	@if [ ! -f .env ]; then \
+		echo "PYTHONPATH=." > .env; \
+		echo "ENV=test" >> .env; \
+		echo "OLLAMA_URL=http://localhost:11434" >> .env; \
+		echo "NICEGUI_NATIVE=False" >> .env; \
+		echo "DOMAIN=$(DOMAIN)" >> .env; \
+		echo "USER=$(USER)" >> .env; \
+		echo "POSTGRES_PASSWORD=$$(openssl rand -hex 32)" >> .env; \
+		echo "LANGFUSE_SECRET_KEY=$$(openssl rand -hex 32)" >> .env; \
+		echo "NEXTAUTH_SECRET=$$(openssl rand -hex 32)" >> .env; \
+		echo "✅ .env file created with secure unique keys."; \
+	else \
+		echo "⚠️  .env file already exists. Skipping to protect existing secrets."; \
+	fi
 
 install: .env ## Create virtualenv and install dependencies
 	$(PYTHON) -m venv $(VENV)
