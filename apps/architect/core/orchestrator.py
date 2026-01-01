@@ -91,6 +91,16 @@ def engineer_node(state: AgentState) -> Dict[str, Any]:
     }
 
 
+def review_node(state: AgentState):
+    """
+    Critiques the proposed solution based on the 'Less is More' principle.
+    """
+    # This node sends the plan to a critic agent (or the same LLM with a specific prompt)
+    # to identify unnecessary complexity or redundant dependencies.
+    prompt = "Review the following proposal. Identify 3 things that can be removed to make it simpler."
+    # ... logic to call the LLM ...
+    return state
+
 # --- Routing Logic (The Deciders) ---
 
 
@@ -121,7 +131,7 @@ workflow.add_node("pm", pm_node)
 workflow.add_node("analyst", analyst_node)
 workflow.add_node("architect", architect_node)
 workflow.add_node("engineer", engineer_node)
-
+workflow.add_node("reviewer", review_node)
 # Set the entry point to the PM Agent
 workflow.add_edge(START, "pm")
 
@@ -140,7 +150,8 @@ workflow.add_conditional_edges(
 # Linear flow for the remaining agents (Post-validation)
 workflow.add_edge("analyst", "architect")
 workflow.add_edge("architect", "engineer")
-workflow.add_edge("engineer", END)
+workflow.add_edge("engineer", "reviewer")
+workflow.add_edge("reviewer", END)
 
 # Compile the graph into an executable app
 app_workflow = workflow.compile()
