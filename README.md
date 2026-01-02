@@ -17,6 +17,8 @@ The system follows a strict automated workflow based on an agentic bus:
 3. **Architect Agent**: Designs C4 Diagrams and Decision Records (ADR).
 4. **Engineer Agent**: Produces TDD-backed, SOLID-compliant code.
 
+While general-purpose agents like Skywork, Manus, or Genspark excel at rapid task execution, **AgenticArchitect** focuses on the craft of software engineering. It is not just a tool for generating results; it is a framework for building sustainable architecture, enforcing rigorous methodologies, and maintaining total sovereignty over your local infrastructure.
+
 ## 🔍 Related Research & Agentic Tools
 
 Here are some useful resources and projects for deep research and agentic AI systems:
