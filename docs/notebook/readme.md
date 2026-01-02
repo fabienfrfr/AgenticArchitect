@@ -1,1 +1,64 @@
-Only markdown with executable code (see vscode extension)
+# Persistent Python Execution in Markdown
+
+This guide explains how to use a standard `.md` file to write and execute Python code with persistent memory, without the clutter of Jupyter Notebook files (`.ipynb`).
+
+## 🛠 Required Setup
+
+To run code blocks and keep variables in memory, ensure you have these extensions in VS Code:
+
+* **Python** (by Microsoft)
+* **Jupyter** (by Microsoft) — *Used as the background engine only.*
+
+## 🚀 Usage Instructions
+
+### Method 1: The "Markdown Editor" (Recommended)
+
+This is the cleanest way to have a "Notebook-like" experience within a raw text file.
+
+1. **Right-click** your `.md` file in the sidebar.
+2. Select **Open With...**
+3. Choose **Markdown Editor**.
+4. VS Code will render the file with **Run** buttons.
+5. All executed blocks share the same Python kernel (variables are saved between blocks).
+
+### Method 2: Markdown Preview Enhanced
+
+If you prefer using the side-by-side preview:
+
+1. Install the **Markdown Preview Enhanced** extension.
+2. In your Markdown, add `{cmd=true}` to your code blocks:
+```python {cmd=true}
+x = 42
+
+```
+
+
+3. Open the preview (`Ctrl+Shift+V`) and click on the output area to run.
+
+---
+
+## 📝 Example
+
+Run the blocks below in order to test the persistent memory:
+
+**Block 1: Define a variable**
+
+```python
+message = "Memory is persistent!"
+print("Variable defined.")
+
+```
+
+**Block 2: Access the variable**
+
+```python
+# This works without re-defining 'message'
+print(f"Result: {message}")
+
+```
+
+## 💎 Benefits
+
+* **Clean Git History**: No metadata or binary blobs, just plain text.
+* **No Cache**: No `.ipynb_checkpoints` or hidden folders created.
+* **Lightweight**: Perfect for documentation that needs to be "runnable."
