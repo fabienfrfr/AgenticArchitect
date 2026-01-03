@@ -11,27 +11,17 @@ To run code blocks and keep variables in memory, ensure you have these extension
 
 ## 🚀 Usage Instructions
 
-### Method 1: The "Markdown Editor" (Recommended)
+### Markdown Preview Enhanced
 
-This is the cleanest way to have a "Notebook-like" experience within a raw text file.
-
-1. **Right-click** your `.md` file in the sidebar.
-2. Select **Open With...**
-3. Choose **Markdown Editor**.
-4. VS Code will render the file with **Run** buttons.
-5. All executed blocks share the same Python kernel (variables are saved between blocks).
-
-### Method 2: Markdown Preview Enhanced
-
-If you prefer using the side-by-side preview:
+Side-by-side preview:
 
 1. Install the **Markdown Preview Enhanced** extension.
 2. In your Markdown, add `{cmd=true}` to your code blocks:
-```python {cmd=true}
+
+```python
 x = 42
 
 ```
-
 
 3. Open the preview (`Ctrl+Shift+V`) and click on the output area to run.
 
