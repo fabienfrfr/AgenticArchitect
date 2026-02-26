@@ -24,10 +24,12 @@ case $MODE in
     "merge")
         [ -z "$MSG" ] && { echo "💬 Error: Missing message (m='msg')"; exit 1; }
         echo "🔗 Local squash-merge into $TARGET..."
+        git log $TARGET..$BRANCH --oneline
         git checkout $TARGET && git pull origin $TARGET
         git merge --squash "$BRANCH"
         git commit -m "$MSG"
         git branch -D "$BRANCH"
+        echo "do : git push origin --delete "$BRANCH""
         echo "✅ Merged locally into $TARGET."
         ;;
 
