@@ -10,6 +10,6 @@ must_have:
     expected_status: 200
   model:
     id: "MODEL-01"
-    description: "The qwen3:0.6b model must be pulled and ready."
-    name: "qwen3:0.6b"
+    description: "The qwen3.5:0.8b model must be pulled and ready."
+    name: "qwen3.5:0.8b"
     endpoint: "/api/tags"
