@@ -8,7 +8,7 @@ must_have:
     description: "Kubernetes services must be accessible via localhost tunnels."
     mapping:
       - name: "Ollama"
-        local_port: 11434
+        local_port: 11434 # need to verify if local ollama service if shutdown
       - name: "Phoenix UI"
         local_port: 6006
       - name: "Phoenix Collector"
