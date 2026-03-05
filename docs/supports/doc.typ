@@ -37,7 +37,7 @@ The infrastructure, managed via `devbox.json`, ensures high performance and data
 
 - *Orchestration*: #raw("K3d / K3s") for local Kubernetes clusters.
 - *Development*: #raw("Skaffold") for hot-reloading and #raw("UV") for Python management.
-- *AI Framework*: #raw("Pydantic AI") for agent logic and #raw("Ollama") (Qwen 3:0.6B) for local inference.
+- *AI Framework*: #raw("Pydantic AI") for agent logic and #raw("Ollama") (Qwen 3.5:0.8B) for local inference.
 - *Observability*: #raw("Arize Phoenix") for tracing agentic workflows.
 
 = Agentic Workflow
