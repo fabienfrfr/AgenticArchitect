@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     @property
     def MODEL_NAME(self) -> str:
         if self.ENV.lower() == "test":
-            return "qwen3.5:0.8b"
+            return "qwen3:0.6b"
         return "nemotron-3-nano:30b"
 
 

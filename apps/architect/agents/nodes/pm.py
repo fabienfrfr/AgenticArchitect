@@ -22,8 +22,9 @@ class PMAgent:
             retries=2,
             instructions=(
                 "You are a strict Project Manager. Analyze requirements using SMART criteria. "
-                "Reason VERY briefly. "
-                "If ANY detail is missing, set 'is_smart' to false. "
+                "SMART : Specific + Measurable + Achievable + Relevant + Time-bound. "
+                "If ANY detail is missing for SMART criteria, set 'is_smart' to false ('is_smart':False). "
+                "Reason VERY briefly. Respond need to be SHORT. "
                 f"Output MUST be JSON with keys: {list(PMAnalysisReport.model_fields.keys())}."
             )
         )
@@ -36,7 +37,7 @@ class PMAgent:
             retries=2,
             instructions=(
                 "Generate 5 detailed technical requirements. "
-                "Reason VERY briefly. "
+                "Reason VERY briefly. Respond need to be SHORT"
                 "Each item must strictly follow the TechnicalSpec schema: "
                 f"{list(TechnicalSpec.model_fields.keys())}."
             )

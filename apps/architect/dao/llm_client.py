@@ -16,5 +16,8 @@ def get_llm_model() -> OpenAIChatModel:
         provider=OllamaProvider(
             base_url=f"{config.OLLAMA_URL}/v1",
             http_client=http_client
-            ),
+        ),
+        settings={
+            "extra_body": {"think": False,}
+        }
     )
